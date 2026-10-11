@@ -26,3 +26,48 @@
 * Verified that the local development workflow (WSL + Docker + NestJS) is fully operational for the upcoming database and backend tasks.
 
 ---
+
+# Week 1 - Day 2: PostgreSQL Schema Design, Docker Setup & Queries
+
+## 📅 Date: October 7, 2026
+
+## 🎯 Objectives
+* Set up a PostgreSQL database instance using Docker Compose.
+* Design a relational database schema (`users`, `products`, `orders`, `order_items`) and establish primary/foreign key relationships.
+* Practice writing DDL/DML statements, SQL JOIN queries, index optimization (`EXPLAIN ANALYZE`), and troubleshooting Docker container issues.
+* Document schema architecture decisions.
+
+---
+
+
+## ✅ Completed Tasks (Day 2 Checklist)
+* [x] **Docker Compose Setup:** Created `docker-compose.yml` and ran `docker compose up -d`.
+* [x] **Troubleshooting Container Initialization:** Encountered and resolved a PostgreSQL 18+ data path mount error by updating the path configuration in `docker-compose.yml` to `/var/lib/postgresql`.
+* [x] **Database Management Tooling:** Installed DBeaver GUI client and successfully connected it to the local PostgreSQL database instance.
+* [x] **Interactive CLI (psql):** Verified tables, relations, and database instances using `\dt`, `\d`, and `\l` commands.
+* [x] **Schema Design & ER Diagram:** Modeled entities (`users`, `products`, `orders`, `order_items`) and mapped out 1:N and N:M relationships.
+* [x] **Data Insertion & Interrogation:** Created tables, seeded sample test data, and executed multi-table JOIN queries.
+* [x] **Query Execution Plan:** Evaluated index performance using `EXPLAIN ANALYZE` on indexed Foreign Key fields.
+* [x] **Architecture Decision Record (ADR):** Created `docs/decisions/001-postgres-schema.md` to document the relational database design choices.
+* [x] **Push Progress:** Pushed the learning log and ADR document to GitHub.
+
+---
+
+## 🛠️ Troubleshooting & Technical Insights
+### Issue: Docker Container Crash on Startup (`ops-hub-db`)
+* **Symptom:** The PostgreSQL container kept stopping immediately after starting `docker compose up -d`.
+* **Root Cause:** In PostgreSQL image versions 18+, volume mounts require the data path configuration to match major-version directory structures rather than the default unused mount directory `/var/lib/postgresql/data`.
+* **Resolution:** Reconfigured the volume mount target in `docker-compose.yml` to `/var/lib/postgresql`, allowing the container to initialize successfully. Connected DBeaver to verify data persistence.
+
+---
+
+## 💡 Conceptual Concepts Mastered
+* **One-to-Many vs. Many-to-Many:**
+  * *One-to-Many:* A single user can own multiple orders (`users.id` -> `orders.user_id`).
+  * *Many-to-Many:* An order can contain multiple products, and a product can belong to multiple orders. This is resolved using a junction table (`order_items`).
+* **Primary Key vs. Foreign Key vs. Index:**
+  * *Primary Key:* Unique identifier for each row in a table.
+  * *Foreign Key:* Enforces referential integrity between child and parent tables.
+  * *Index:* A B-Tree data structure created on frequently queried columns (e.g., Foreign Keys) to improve lookup speeds from sequential scans (`Seq Scan`) to index scans (`Index Scan`).
+
+---
