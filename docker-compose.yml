@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: ops-hub-db
+    environment:
+      POSTGRES_USER: ops_admin1
+      POSTGRES_PASSWORD: "#1@Ops_2@hub_3@admin#"
+      POSTGRES_DB: opshubdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+volumes:
+  pgdata:
