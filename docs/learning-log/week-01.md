@@ -25,7 +25,7 @@
 * Since I have prior experience with Node.js, Git, VS Code, and NestJS, setting up the boilerplate and base structure went very smoothly.
 * Verified that the local development workflow (WSL + Docker + NestJS) is fully operational for the upcoming database and backend tasks.
 
----
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Week 1 - Day 2: PostgreSQL Schema Design, Docker Setup & Queries
 
@@ -70,4 +70,47 @@
   * *Foreign Key:* Enforces referential integrity between child and parent tables.
   * *Index:* A B-Tree data structure created on frequently queried columns (e.g., Foreign Keys) to improve lookup speeds from sequential scans (`Seq Scan`) to index scans (`Index Scan`).
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Week 1 - Day 3: Prisma 7 Integration, Driver Adapters & NestJS Products CRUD
+
+## 📅 Date: October 8, 2026
+
+## 🎯 Objectives
+* Initialize and configure Prisma 7 with PostgreSQL using the new configuration structure and driver adapters.
+* Set up `PrismaService` and `PrismaModule` inside the NestJS application.
+* Implement DTOs, Services, and Controllers for the Products resource.
+* Test and verify all CRUD endpoints, input validation, and error handling.
+
 ---
+
+## ✅ Completed Tasks (Day 3 Checklist)
+* [x] **Prisma Setup & Configuration:** Installed Prisma 7, configured `prisma.config.ts`, and set up correct database connection URLs in `.env`.
+* [x] **Schema Modeling:** Defined the four core database models in `schema.prisma`.
+* [x] **Database Migration:** Successfully executed `npx prisma migrate dev --name init`.
+* [x] **Prisma Studio:** Visually inspected and managed database tables using Prisma Studio.
+* [x] **NestJS Integration:** Created and integrated `PrismaService` and `PrismaModule` into the application.
+* [x] **Products Module:** Developed DTOs, Service logic, and Controller endpoints for Products CRUD operations.
+* [x] **Endpoint Testing:** Tested all product CRUD routes and verified validation rules and 404 error responses.
+* [x] **Learning Log Push:** Committed progress and pushed the learning log to GitHub.
+
+---
+
+## 🛠️ Troubleshooting & Technical Insights (Prisma 7 Migration)
+### 1. Prisma 7 Initialization & CLI Changes
+* **Issue:** Running `npx prisma init` in Prisma 7 did not generate `prisma/schema.prisma` or `.env` as it did in older versions (v6/v7 legacy); instead, it initialized `prisma.config.ts` and agent skills.
+* **Resolution:** Understood the structural shift in Prisma 7 where configuration is managed via `prisma.config.ts` and `datasource` settings are explicitly declared inside the config file rather than inside `schema.prisma`.
+
+### 2. Special Characters in Database Passwords
+* **Issue:** Database connection errors due to unescaped special characters (e.g., `@`, `#`, `:`, `%`) in the PostgreSQL password within the `.env` URL.
+* **Resolution:** Properly URL-encoded the special characters in the connection string.
+
+### 3. Prisma 7 Driver Adapter Requirement
+* **Issue:** Encountered `PrismaClientInitializationError` stating that a driver adapter is required when instantiating `new PrismaClient()` directly.
+* **Resolution:** Installed `@prisma/adapter-pg` and `pg` (along with `@types/pg`) and updated `PrismaService` to pass the `PrismaPg` adapter instance to the `PrismaClient` constructor.
+
+### 4. Environment Variables Loading (`ConfigModule`)
+* **Issue:** `process.env.DATABASE_URL` resolved to `undefined`, triggering `SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string` error during API requests.
+* **Resolution:** Integrated `@nestjs/config` (`ConfigModule.forRoot()`) to ensure environment variables are correctly loaded and globally accessible before database queries execute.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
