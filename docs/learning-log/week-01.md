@@ -149,3 +149,34 @@
   }
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Week 1 - Day 5: TypeScript Strict Mode, Input Validation & Type Safety
+
+## 📅 Date: October 10, 2026
+
+## 🎯 Objectives
+* Enable TypeScript strict mode and additional safety flags to eliminate runtime type errors.
+* Refactor the codebase to pass type checks (`npx tsc --noEmit`) cleanly without any errors.
+* Implement robust input validation using class-validator and DTO decorators while exploring Zod basics.
+* Document why the `any` type is dangerous and restrict non-null assertions.
+
+---
+
+## ✅ Completed Tasks (Day 5 Checklist)
+* [x] **TypeScript Strict Configuration:** Enabled `strict: true` and additional strictness flags in `tsconfig.json`[cite: 1].
+* [x] **Type Checking:** Ran `npx tsc --noEmit` and successfully resolved all type errors.
+* [x] **Null & Undefined Safety:** Fixed all null/undefined, implicit `any`, and uninitialized property errors across the codebase[cite: 1].
+* [x] **Restricted Non-Null Assertions:** Ensured non-null assertion operators (`!`) are used strictly and only where justified inside DTOs, avoiding them elsewhere[cite: 1].
+* [x] **DTO Validation Decorators:** Applied accurate validation decorators (such as `@IsEmail()`, etc.) across all DTO classes[cite: 1].
+* [x] **Zod Exploration:** Explored the fundamental concepts of Zod for schema validation[cite: 1].
+* [x] **Regression Testing:** Verified that all existing API endpoints continue to function smoothly without disruptions[cite: 1].
+* [x] **Decision Log Documentation:** Documented the hazards of using `any` and type safety best practices in the decision log[cite: 1].
+* [x] **Learning Log Push:** Committed code changes and pushed the updated learning log to GitHub[cite: 1].
+
+---
+
+## 💡 Conceptual Insights & Takeaways
+* **Why `any` is Dangerous:** Using `any` opts out of TypeScript's static type-checking system, hiding potential bugs and making maintenance difficult as the codebase grows. Enforcing strict typing ensures better IDE autocompletion, early bug detection, and robust runtime stability.
+* **Strict Mode Benefits:** Enabling strict flags forces developers to handle edge cases explicitly (such as handling possible `null` or `undefined` values), leading to significantly cleaner and more reliable NestJS backend code.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
