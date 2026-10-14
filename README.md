@@ -59,6 +59,29 @@ A production-ready, full-featured backend system built with NestJS, featuring Po
 
 ---
 
+## Database Setup Notes (Prisma 7)
+
+This project uses **Prisma 7** instead of the latest Prisma 8 RC due to significant breaking changes in the initialization and client instantiation process.
+
+### Why Prisma 7?
+- Prisma 8 changed `prisma init` behavior (no longer creates `schema.prisma` + `.env` by default)
+- Required driver adapters for database connections
+- New `prisma.config.ts` structure
+
+### Key Setup Steps
+1. Installed Prisma 7.10.0 for stability
+2. Used `@prisma/adapter-pg` + `pg` for PostgreSQL connection
+3. Configured `PrismaService` with driver adapter
+4. Handled special characters in `DATABASE_URL` (URL encoding)
+
+### Useful Commands
+```bash
+npx prisma migrate dev
+npx prisma generate
+npx prisma studio
+
+---
+
 ## 🚀 Getting Started
 
 ### Prerequisites

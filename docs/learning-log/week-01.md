@@ -114,3 +114,38 @@
 * **Resolution:** Integrated `@nestjs/config` (`ConfigModule.forRoot()`) to ensure environment variables are correctly loaded and globally accessible before database queries execute.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Week 1 - Day 4: Database Transactions, Seed Scripts & Orders Module
+
+## 📅 Date: October 9, 2026
+
+## 🎯 Objectives
+* Understand and implement database transactions (sequential vs. interactive transactions) in PostgreSQL using Prisma.
+* Build the Orders module with nested DTO validation.
+* Implement atomic operations (`$transaction`) combining stock checks, order creations, and inventory decrements.
+* Configure database seeding in Prisma 7 and successfully populate initial data.
+
+---
+
+## ✅ Completed Tasks (Day 4 Checklist)
+* [x] **Transaction Concepts:** Explored the differences between sequential and interactive database transactions.
+* [x] **Orders Module & Validation:** Developed the Orders module with nested DTO validation for robust request payloads.
+* [x] **Atomic Transactions (`$transaction`):** Implemented Prisma's `$transaction` to handle stock verification, order generation, and stock decrement as a single atomic unit.
+* [x] **Successful Order Flow:** Verified that successful orders correctly decrement product stock levels.
+* [x] **Rollback Mechanism:** Handled insufficient stock errors by returning a 400 status code and ensuring complete transaction rollbacks for both single and multi-item orders.
+* [x] **Database Seeding:** Written `prisma/seed.ts` and successfully populated test data using `npx prisma db seed`.
+* [x] **Learning Log Push:** Committed code progress and pushed the updated learning log to GitHub.
+
+---
+
+## 🛠️ Troubleshooting & Technical Insights (Prisma 7 Seeding)
+### Issue: `No seed command configured` in Prisma 7
+* **Symptom:** Running `npx prisma db seed` threw an error stating that no seed command was configured, as Prisma 7 no longer reads the `"prisma": { "seed": ... }` configuration property from `package.json`.
+* **Resolution:** Moved the seed configuration into the `migrations` block inside `prisma7.config.ts` (or `prisma.config.ts`) and specified the execution runner:
+  ```ts
+  migrations: {
+    path: "prisma/migrations",
+    seed: "ts-node prisma/seed.ts",
+  }
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
