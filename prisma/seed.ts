@@ -43,6 +43,7 @@ async function main() {
         create: [
           { productId: keyboard.id, quantity: 1, unitPriceCents: keyboard.priceCents },
           { productId: mouse.id, quantity: 1, unitPriceCents: mouse.priceCents },
+          { productId: monitor.id, quantity: 1, unitPriceCents: monitor.priceCents },
         ],
       },
     },
