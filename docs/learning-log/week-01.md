@@ -180,3 +180,42 @@
 * **Strict Mode Benefits:** Enabling strict flags forces developers to handle edge cases explicitly (such as handling possible `null` or `undefined` values), leading to significantly cleaner and more reliable NestJS backend code.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Week 1 - Day 6: Authentication Module, JWT Configuration & E2E Testing
+
+## 📅 Date: October 18, 2026
+
+## 🎯 Objectives
+* Build and test the Authentication module (`register` and `login` endpoints).
+* Implement secure password hashing using `bcrypt` to prevent plain-text storage.
+* Set up a separate test database (`opshub_test`) with corresponding environment configurations (`.env.test`).
+* Write and pass comprehensive End-to-End (E2E) test suites using Jest and Supertest.
+
+---
+
+## ✅ Completed Tasks (Day 6 Checklist)
+* [x] **Auth Module Implementation:** Developed `register` and `login` routes and tested them manually.
+* [x] **Secure Password Hashing:** Ensured passwords are encrypted with `bcrypt` before database persistence[cite: 1].
+* [x] **Test Environment Isolation:** Created a dedicated `opshub_test` database and configured migrations[cite: 1].
+* [x] **Test Environment Config:** Set up `.env.test` and `test-env-setup.ts`[cite: 1].
+* [x] **E2E Test Suites:** Wrote 6 E2E test cases covering successful registration, duplicate emails, short passwords, successful logins, incorrect passwords, and non-existent emails[cite: 1].
+* [x] **Test Execution:** Verified that `npm run test:e2e` passes successfully[cite: 1].
+* [x] **Learning Log Push:** Committed code and pushed the updated learning log to GitHub[cite: 1].
+
+---
+
+## 🛠️ Troubleshooting & Technical Insights
+### 1. `secretOrPrivateKey must have a value` (JWT Module)
+* **Issue:** The `JwtModule` threw a runtime error during token generation because `process.env.JWT_SECRET` was evaluated as `undefined` when using synchronous static configuration (`JwtModule.register`).
+* **Resolution:** Switched to asynchronous configuration using `JwtModule.registerAsync` combined with `ConfigService` to securely fetch environment variables after the configuration module initializes:
+  ```ts
+  JwtModule.registerAsync({
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    useFactory: (configService: ConfigService) => ({
+      secret: configService.get<string>('JWT_SECRET'),
+      signOptions: { expiresIn: '1d' },
+    }),
+  })
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
